@@ -4,6 +4,9 @@
 (unless (assoc-default "nongnu" package-archives)
   (add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/") t))
 
+;; Nix manages packages — never auto-install via use-package
+(setq use-package-always-ensure nil)
+
 (setq user-full-name "echepolus"
       user-mail-address "a.kotominn@gmail.com")
 
@@ -27,33 +30,32 @@
 
 (column-number-mode 0)
 (line-number-mode 0)
-(tab-bar-mode)
-(scroll-bar-mode 0)
+(setq-default fill-column 80)
+(global-display-fill-column-indicator-mode 1)
+(tab-bar-mode 1)
+(scroll-bar-mode -1)
 (menu-bar-mode -1)
-(tool-bar-mode 0)
+(tool-bar-mode -1)
 (tooltip-mode -1)
 (winner-mode 1)
 (blink-cursor-mode 0)
-(global-hl-line-mode)
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
+(global-hl-line-mode 1)
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message nil)
 (setq confirm-kill-emacs #'y-or-n-p)
-(use-package gcmh
-  :ensure nil
-  :demand t
-  :config (gcmh-mode 1))
+;; GC threshold without the gcmh package
+(setq gc-cons-threshold (* 50 1024 1024))
 (setq use-short-answers t)
-(global-visual-line-mode t)
-(global-auto-revert-mode t)
-(show-paren-mode t)
+;; visual-line только для текстовых режимов, не глобально
+(add-hook 'text-mode-hook #'visual-line-mode)
+(global-auto-revert-mode 1)
+(show-paren-mode 1)
 (setq show-paren-style 'mixed)
 (setq show-paren-delay 0)
 (setq warning-minimum-level :error)
-(dolist (mode '(prog-mode-hook))
-  (add-hook mode #'display-line-numbers-mode 0))
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
 (setq frame-resize-pixelwise t)
+(electric-pair-mode 1)
 
 (global-unset-key (kbd "M-o"))
 
@@ -64,43 +66,15 @@
   (aw-keys '(?a ?r ?s ?t ?g ?m ?n ?e ?i ?o))
   (aw-minibuffer-flag t)
   :config
-  (ace-window-display-mode 1)
-  (advice-add 'ace-select-window :after #'eu/auto-resize))
+  (ace-window-display-mode 1))
 
-(setopt auto-resize-ratio 0.7)
+;; Плавный скролл встроенными средствами без пакетов
+(setq scroll-conservatively 101
+      scroll-margin 3
+      scroll-step 1)
 
-(defun eu/auto-resize ()
-  (let* ((height (floor (* auto-resize-ratio (frame-height))))
-         (width (floor (* auto-resize-ratio (frame-width))))
-         (h-diff (max 0 (- height (window-height))))
-         (w-diff (max 0 (- width (window-width)))))
-    (enlarge-window h-diff)
-    (enlarge-window w-diff t)))
-(setopt window-min-height 10)
-(setopt window-min-width 10)
-
-(advice-add 'other-window :after (lambda (&rest args) (eu/auto-resize)))
-(advice-add 'windmove-up    :after 'eu/auto-resize)
-(advice-add 'windmove-down  :after 'eu/auto-resize)
-(advice-add 'windmove-right :after 'eu/auto-resize)
-(advice-add 'windmove-left  :after 'eu/auto-resize)
-
-(use-package ultra-scroll
-  :init (setq scroll-conservatively 3
-              scroll-margin 0)
-  :config (ultra-scroll-mode 1))
-
-(use-package all-the-icons)
-
-(use-package f
-  :ensure nil
-  :demand t)
-
-(use-package doom-modeline
-  :after f
-  :init (doom-modeline-mode 1)
-  :config
-  (setq doom-modeline-icon 1))
+;; Встроенный modeline — без внешних пакетов
+(size-indication-mode 1)
 
 (use-package fontaine
   :ensure nil
@@ -349,8 +323,6 @@
       backup-by-copying t
       version-control t
       delete-old-versions t)
-(setq undo-tree-history-directory-alist '(("." . "~/.local/state/emacs/undo")))
-
 (setq auto-save-file-name-transforms
       `((".*" "~/.local/state/emacs/" t)))
 (setq lock-file-name-transforms
@@ -393,21 +365,30 @@
   (setq insert-directory-program
         (expand-file-name ".nix-profile/bin/ls" (getenv "HOME"))))
 
-
-
 (use-package denote
   :ensure nil
   :hook (dired-mode . denote-dired-mode)
   :bind
   (("C-c n n" . denote)
    ("C-c n r" . denote-rename-file)
-   ("C-c n l" . denote-link)
+   ("C-c n l" . eu/denote-link-or-create-other-window)
    ("C-c n b" . denote-backlinks)
    ("C-c n d" . denote-dired)
    ("C-c n g" . denote-grep))
   :config
   (setq denote-directory (expand-file-name "~/org/inbox/"))
   (denote-rename-buffer-mode 1))
+
+(defun eu/denote-link-or-create-other-window ()
+  (interactive)
+  (let ((before (current-buffer)))
+    (call-interactively #'denote-link-or-create)
+    (let ((buf (current-buffer)))
+      (unless (eq buf before)
+        (unless (> (count-windows) 1)
+          (split-window-right))
+        (other-window 1)
+        (switch-to-buffer buf)))))
 
 (use-package consult-denote
   :ensure nil
@@ -434,6 +415,16 @@
     denote-org-dblock-insert-missing-links
     denote-org-dblock-insert-files-as-headings))
 
+   (with-eval-after-load 'org-capture
+     (add-to-list 'org-capture-templates
+                  '("n" "New note (with Denote)" plain
+                    (file denote-last-path)
+                    #'denote-org-capture
+                    :no-save t
+                    :immediate-finish nil
+                    :kill-buffer t
+                    :jump-to-captured t)))
+
 (use-package denote-journal
   :ensure nil
   :commands ( denote-journal-new-entry
@@ -445,6 +436,45 @@
         (expand-file-name "journal" denote-directory))
   (setq denote-journal-keyword "journal")
   (setq denote-journal-title-format 'day-date-month-year))
+
+(use-package citar-denote
+  :ensure nil
+  :demand t
+  :after (:any citar denote)
+  :custom
+  (citar-denote-file-type 'org)
+  (citar-denote-keyword "bib")
+  (citar-denote-signature nil)
+  (citar-denote-subdir nil)
+  (citar-denote-template nil)
+  (citar-denote-title-format "title")
+  (citar-denote-title-format-andstr "and")
+  (citar-denote-title-format-authors 1)
+  (citar-denote-use-bib-keywords nil)
+  :preface
+  (bind-key "C-c t o" #'citar-denote-open-note)
+  :init
+  (citar-denote-mode)
+  :bind (("C-c t d" . citar-denote-dwim)
+         ("C-c t e" . citar-denote-open-reference-entry)
+         ("C-c t a" . citar-denote-add-citekey)
+         ("C-c t k" . citar-denote-remove-citekey)
+         ("C-c t r" . citar-denote-find-reference)
+         ("C-c t l" . citar-denote-link-reference)
+         ("C-c t f" . citar-denote-find-citation)
+         ("C-c t x" . citar-denote-nocite)
+         ("C-c t y" . citar-denote-cite-nocite)
+         ("C-c t z" . citar-denote-nobib)))
+
+(use-package citar
+  :ensure nil
+  :defer t
+  :custom
+  (citar-bibliography '("~/org/library/citar.bib"))
+  ;; Allow multiple notes per bibliographic entry
+  (citar-open-always-create-notes nil)
+  :init
+  :bind ("C-c t c" . citar-create-note))
 
 (use-package nov
   :mode ("\\.epub\\'" . nov-mode))
@@ -460,7 +490,7 @@
   (setq calibredb-id-width 0)
   (setq calibredb-comment-width 0)
   (setq calibredb-size-show t)
-  (setq calibredb-format-all-the-icons t)
+  (setq calibredb-format-all-the-icons nil)
   (setq calibredb-program "/Applications/calibre.app/Contents/MacOS/calibredb"))
 
 (use-package pdf-tools
@@ -482,7 +512,7 @@
   :after pdf-tools
   :config
   (add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode)
-  (setq pdf-view-restore-filename "~/.emacs.d/.pdf-view-restore"))
+  (setq pdf-view-restore-filename "~/.local/state/emacs/pdf-view-restore"))
 
 (use-package markdown-mode
   :ensure nil
@@ -491,18 +521,15 @@
   :bind (:map markdown-mode-map
             ("C-c C-e" . markdown-do)))
 
-(use-package vterm
-  :commands vterm
+(use-package clipetty
+  :ensure nil
   :config
-  (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")
-  (setq vterm-shell "zsh")
-  (setq vterm-max-scrollback 10000))
+  (global-clipetty-mode 1))
 
 (global-set-key (kbd "s-<down>") (kbd "C-u 1 C-v")) ;; scroll up
 (global-set-key (kbd "s-<up>") (kbd "C-u 1 M-v")) ;; scroll down
 (global-set-key (kbd "C-1") 'kill-current-buffer)
 (global-set-key (kbd "M-/") 'hippie-expand)
-(global-set-key (kbd "C-c r") 'remember)
 (global-set-key (kbd "<f5>") (lambda() (interactive)(find-file "~/")))
 (global-set-key (kbd "<s-right>") 'next-buffer)
 (global-set-key (kbd "<s-left>") 'previous-buffer)
@@ -526,27 +553,33 @@
 
 (defun eu/projects-visit ()
   (interactive)
-  (find-file "/Users/alexeykotomin/org/20260105T151859--действующие-проекты-и-книги__задачи_книги_проекты.org"))
+  (find-file (expand-file-name
+              "20260105T151859--действующие-проекты-и-книги__задачи_книги_проекты.org"
+              "~/org")))
 
 (defun eu/emacs-help-notes ()
   (interactive)
-  (find-file "/Users/alexeykotomin/org/help-notes/20260317T163943--emacs-help-notes__emacs.org"))
+  (find-file (expand-file-name
+              "help-notes/20260317T163943--emacs-help-notes__emacs.org"
+              "~/org")))
 
 (defun eu/org-help-notes ()
   (interactive)
-  (find-file "/Users/alexeykotomin/org/help-notes/20260317T164018--org-help-notes__emacs.org"))
+  (find-file (expand-file-name
+              "help-notes/20260317T164018--org-help-notes__emacs.org"
+              "~/org")))
 
 (defun eu/emacs-config ()
   (interactive)
-  (find-file "/Users/alexeykotomin/.config/nix/modules/shared/config/emacs/config.org"))
+  (find-file (expand-file-name "~/.config/nix/modules/shared/config/emacs/config.org")))
 
 (defun eu/kanata-config ()
   (interactive)
-  (find-file "/Users/alexeykotomin/.config/kanata/main.kbd"))
+  (find-file (expand-file-name "~/.config/kanata/main.kbd")))
 
 (defun eu/aerospace-config ()
   (interactive)
-  (find-file "/Users/alexeykotomin/.config/aerospace/aerospace.toml"))
+  (find-file (expand-file-name "~/.config/aerospace/aerospace.toml")))
 
 (eu/leader-keys
  "p p" #'eu/projects-visit
@@ -568,32 +601,46 @@
   :demand t
   :after char-fold
   :bind
-  ("M-Τ" . reverse-im-translate-word) ; to fix a word written in the wrong layout
+  ("M-Τ" . reverse-im-translate-word)
   :custom
   (reverse-im-cache-file (locate-user-emacs-file "reverse-im-cache.el"))
-  ;; use lax matching
   (reverse-im-char-fold t)
-  ;; advice read-char to fix commands that use their own shortcut mechanism
+  ;; Должно быть до (reverse-im-mode t)
+  (reverse-im-fix-shortcuts t)
   (reverse-im-read-char-advice-function #'reverse-im-read-char-include)
   (reverse-im-input-methods '("russian-computer" "greek"))
   :config
-  (reverse-im-mode t)) ; turn the mode on
-
-(setq reverse-im-fix-shortcuts t)
+  (reverse-im-mode t))
 
 (use-package telega
   :commands (telega)
-  ;; :bind ("C-c t" . telega)
   :init
   (define-prefix-command 'my-telega-prefix)
   (global-set-key (kbd "C-c t") 'my-telega-prefix)
-
   :config
-  (setq telega-app '(38023252 . "25b30c0339ba45df5458e8e15f2d5840"))
-
+  ;; API credentials загружаются из ~/.emacs.d/secrets.el (файл вне git).
+  ;; Шаблон: (setq telega-app '(APP-ID . "APP-HASH"))
+  (let ((secrets (expand-file-name "secrets.el" user-emacs-directory)))
+    (when (file-exists-p secrets)
+      (load secrets)))
   (define-key my-telega-prefix (kbd "t") #'telega)
   (define-key my-telega-prefix (kbd "c") #'telega-chat-with)
   (define-key my-telega-prefix (kbd "s") #'telega-search))
+
+(defun eu/org-mode-setup ()
+  (org-indent-mode 1)
+  (variable-pitch-mode 1)
+  (auto-fill-mode 0)
+  (org-superstar-mode 1))
+
+(use-package org
+  :ensure nil
+  :hook (org-mode . eu/org-mode-setup)
+  :config
+  (setq org-edit-src-content-indentation 2
+        org-ellipsis " ▾"
+        org-hide-emphasis-markers t
+        org-hide-block-startup nil))
 
 (setq org-M-RET-may-split-line nil)
 
@@ -601,15 +648,13 @@
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c c") #'org-capture)
 
-(org-superstar-mode)
-
 (use-package math-preview
   :custom
-  (math-preview-command "/Users/alexeykotomin/.nix-profile/bin/math-preview"))
+  (math-preview-command (expand-file-name "~/.nix-profile/bin/math-preview")))
 
 (defun eu/org-mode-visual-fill ()
-  (setq visual-fill-column-width 90
-	visual-fill-column-center-text t)
+  (setq visual-fill-column-width 80
+        visual-fill-column-center-text t)
   (visual-fill-column-mode 1))
 
 (use-package visual-fill-column
@@ -617,40 +662,31 @@
   (org-mode . eu/org-mode-visual-fill)
   (markdown-mode . eu/org-mode-visual-fill))
 
+(defun eu/tangle-config-on-save ()
+  (when (equal buffer-file-name
+               (expand-file-name "~/.config/nix/modules/shared/config/emacs/config.org"))
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
+
+(add-hook 'after-save-hook #'eu/tangle-config-on-save)
+
 (setq org-directory "~/org")
 (setq org-agenda-files '("~/org"))
 (setq org-todo-keywords
       '((sequence "TODO" "DONE")))
-;;(setq org-log-done 'time)
+
 (setq org-archive-location "~/org/archive.org::")
-;; (setq org-capture-templates
-;;       '(("i" "Inbox" entry
-;;          (file "~/org/inbox.org")
-;;          "* TODO %?\n  %U")))
 
-;; (setq org-agenda-custom-commands
-;;       '(("d" "Daily"
-;;          ((agenda "" ((org-agenda-span 1)))
-;;           (todo "NEXT")))))
+(add-hook 'before-save-hook
+          (lambda ()
+            (unless (derived-mode-p 'markdown-mode)
+              (delete-trailing-whitespace))))
+(setq require-final-newline t)
+(setq whitespace-style '(face trailing tabs tab-mark))
+(global-whitespace-mode 1)
 
-(use-package org-noter
-  :ensure nil
-  :demand t)
-
-(require 'plantuml-mode)
-
-;; (setq plantuml-executable-path "/nix/store/ysk4b6xr6clcl0pwcgjf2gka2pwr6fvy-plantuml-1.2025.9/bin/plantuml")
-;; (setq plantuml-default-exec-mode 'executable)
-
-(setq org-plantuml-jar-path "/Users/alexeykotomin/.nix-profile/lib/plantuml.jar")
-  (setq plantuml-default-exec-mode 'jar)
-
-
-
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((plantuml . t)))
-(add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
+(use-package envrc
+:hook (after-init . envrc-global-mode))
 
 (add-to-list 'auto-mode-alist '("\\.env" . shell-script-mode))
 (add-to-list 'auto-mode-alist '("\\.kbd\\'" . lisp-mode))
@@ -661,48 +697,87 @@
    'org-babel-load-languages
    '((emacs-lisp . t) (python . t) (sql . t) (shell . t) (plantuml . t))))
 
-(defun eu/c-help-at-point ()
-  (interactive)
-  (let ((sym (thing-at-point 'symbol t)))
-    (when sym
-      (man sym))))
+;; Глобальные умолчания отступов
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
 
-(eu/leader-keys
-  "m" #'eu/c-help-at-point)
+;; Настройки по языкам
+(add-hook 'js-mode-hook  (lambda () (setq-local js-indent-level 2)))
+(add-hook 'css-mode-hook (lambda () (setq-local css-indent-offset 2)))
+(add-hook 'nix-mode-hook (lambda () (setq-local tab-width 2)))
+;; Makefile требует табы — восстановить если global indent-tabs-mode nil
+(add-hook 'makefile-mode-hook (lambda () (setq-local indent-tabs-mode t)))
 
-(add-to-list 'display-buffer-alist
-           '("\\*\\(Help\\|Man\\).*\\*"
-             (display-buffer-in-side-window)
-             (side . right)
-             (window-width . 0.5)))
-
-(global-set-key "\C-cw"
-                   (lambda ()
-                     (interactive)
-                     (let ((woman-use-topic-at-point t))
-                       (woman))))
-
-(require 'eglot)
-(add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
-(add-hook 'c-mode-hook 'eglot-ensure)
-(add-hook 'c++-mode-hook 'eglot-ensure)
-
-(use-package flycheck
+(use-package editorconfig
   :ensure nil
   :config
-  (add-hook 'after-init-hook #'global-flycheck-mode))
+  (editorconfig-mode 1))
+
+(use-package corfu
+  :ensure nil
+  :custom
+  (corfu-auto t)
+  (corfu-auto-delay 0.2)
+  (corfu-auto-prefix 2)
+  (corfu-cycle t)
+  (corfu-preselect 'prompt)
+  (corfu-quit-no-match 'separator)
+  :bind (:map corfu-map
+         ("TAB"     . corfu-next)
+         ([tab]     . corfu-next)
+         ("S-TAB"   . corfu-previous)
+         ([backtab] . corfu-previous)
+         ("RET"     . corfu-insert))
+  :init
+  (global-corfu-mode))
+
+(use-package cape
+  :ensure nil
+  :init
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file))
+
+(use-package eglot
+  :ensure nil
+  :hook ((c-mode c++-mode c-ts-mode c++-ts-mode
+          python-mode python-ts-mode
+          js-mode js-ts-mode typescript-mode typescript-ts-mode tsx-ts-mode
+          nix-mode) . eglot-ensure)
+  :bind (:map eglot-mode-map
+         ("C-c l r" . eglot-rename)
+         ("C-c l a" . eglot-code-actions)
+         ("C-c l f" . eglot-format-buffer)
+         ("C-c l d" . eglot-find-declaration)
+         ("C-c l i" . eglot-find-implementation)
+         ("C-c l t" . eglot-find-typeDefinition)
+         ("C-c l h" . eglot-inlay-hints-mode))
+  :custom
+  (eglot-autoshutdown t)
+  (eglot-confirm-server-initiated-edits nil)
+  (eglot-extend-to-xref t)
+  :config
+  ;; Отключить event logging для производительности
+  (fset #'jsonrpc--log-event #'ignore)
+  (add-to-list 'eglot-server-programs
+               '((c-mode c++-mode c-ts-mode c++-ts-mode) "clangd"))
+  (add-to-list 'eglot-server-programs
+               '((python-mode python-ts-mode) "pyright-langserver" "--stdio"))
+  (add-to-list 'eglot-server-programs
+               '(nix-mode "nil"))
+  (add-to-list 'eglot-server-programs
+               '((js-mode js-ts-mode typescript-mode typescript-ts-mode tsx-ts-mode)
+                 "typescript-language-server" "--stdio")))
 
 (use-package flycheck-eglot
-  :ensure t
+  :ensure nil
   :after (flycheck eglot)
   :config
   (global-flycheck-eglot-mode 1))
 
-;; (dap-mode 1)
-;; (dap-ui-mode 1)
-;; (dap-ui-controls-mode 1)
-;; (require 'dap-lldb)
-;; (setq dap-lldb-debug-program '("/Users/alexeykotomin/.nix-profile/bin/lldb-dap"))
+(use-package yasnippet
+  :ensure nil
+  :config
+  (yas-global-mode 1))
 
 (use-package which-key
   :ensure nil
@@ -720,136 +795,3 @@
   ([remap describe-command]  . helpful-callable)
   ([remap describe-variable] . helpful-variable)
   ([remap describe-key]      . helpful-key))
-
-;; Key bindings:
-;; - Toggle Hebrew (biblical-sil): C-\
-;; - Toggle Greek (babel): C-|
-
-;; Type hard break for Hebrew to English
-(define-key 'iso-transl-ctl-x-8-map "f" [?‎])
-(setq alternative-input-methods
-      '(("greek-babel" . [?\C-|])))
-
-(setq default-input-method
-      (caar alternative-input-methods))
-
-(defun toggle-alternative-input-method (method &optional arg interactive)
-  "Toggle input METHOD similar to `toggle-input-method'.
-Uses METHOD instead of `default-input-method'.
-With ARG, behaves like standard toggle-input-method."
-  (if arg
-      (toggle-input-method arg interactive)
-    (let ((previous-input-method current-input-method))
-      (when current-input-method
-        (deactivate-input-method))
-      (unless (and previous-input-method
-                   (string= previous-input-method method))
-        (activate-input-method method)))))
-
-(defun reload-alternative-input-methods ()
-  "Set up global key bindings for alternative input methods.
-Creates toggle functions for each method in `alternative-input-methods'."
-  (dolist (config alternative-input-methods)
-    (let ((method (car config)))
-      (global-set-key (cdr config)
-                      `(lambda (&optional arg interactive)
-                         ,(concat "Behaves similar to `toggle-input-method', but uses \""
-                                  method "\" instead of `default-input-method'")
-                         (interactive "P\np")
-                         (toggle-alternative-input-method ,method arg interactive))))))
-
-(reload-alternative-input-methods)
-
-;;; Dynamic Cursor Adjustment
-
-(defun my-adjust-cursor-for-language ()
-  "Set cursor to bar in Greek/Hebrew region, box otherwise.
-Checks characters within 5 positions before and after point."
-  (let ((greek-or-hebrew-nearby nil))
-    ;; Check characters within 5 positions before and after
-    (save-excursion
-      (let ((start (max (point-min) (- (point) 5)))
-            (end (min (point-max) (+ (point) 5))))
-        (goto-char start)
-        (while (and (< (point) end) (not greek-or-hebrew-nearby))
-          (let ((char (char-after)))
-            (when (and char
-                       (memq (char-table-range char-script-table char)
-                             '(greek hebrew)))
-              (setq greek-or-hebrew-nearby t)))
-          (forward-char 1))))
-    (setq-local cursor-type (if greek-or-hebrew-nearby '(bar . 2) 'box))))
-
-(add-hook 'post-command-hook #'my-adjust-cursor-for-language)
-
-(defun strip-numbers-and-brackets (beg end)
-  "Remove numbers and brackets from selected region between BEG and END.
-Also removes leading/trailing spaces and collapses multiple spaces between words.
-Useful for cleaning up Greek/Hebrew text with verse numbers."
-  (interactive "r")
-  (save-excursion
-    (save-restriction
-      (narrow-to-region beg end)
-      ;; Remove numbers and brackets
-      (goto-char (point-min))
-      (while (re-search-forward "\\([0-9]+\\|\\[\\|\\]\\)" nil t)
-        (replace-match ""))
-      ;; Collapse multiple spaces into single space
-      (goto-char (point-min))
-      (while (re-search-forward " \\{2,\\}" nil t)
-        (replace-match " "))
-      ;; Remove leading and trailing whitespace from each line
-      (goto-char (point-min))
-      (while (re-search-forward "^[[:space:]]+" nil t)
-        (replace-match ""))
-      (goto-char (point-min))
-      (while (re-search-forward "[[:space:]]+$" nil t)
-        (replace-match "")))))
-
-(defalias 'grk 'strip-numbers-and-brackets)
-
-(defun greek-hebrew-flyspell-verify ()
-  "Return nil if word at point contains Greek or Hebrew characters.
-This tells flyspell to skip checking this word."
-  (save-excursion
-    (let ((case-fold-search t)
-          (pos (point))
-          (greek-hebrew-found nil))
-      ;; Check if current word contains Greek or Hebrew
-      (skip-chars-backward "^ \t\n\r")
-      (while (and (< (point) pos) (not greek-hebrew-found))
-        (let* ((char (char-after))
-               (script (and char (char-table-range char-script-table char))))
-          (when (memq script '(greek hebrew))
-            (setq greek-hebrew-found t)))
-        (forward-char 1))
-      ;; Return t to check word, nil to skip
-      (not greek-hebrew-found))))
-
-;; Advice to add Greek/Hebrew checking to existing flyspell predicates
-(defun greek-hebrew-flyspell-advice (orig-fun &rest args)
-  "Advice to skip Greek/Hebrew words in addition to mode-specific checks."
-  (and (greek-hebrew-flyspell-verify)
-       (apply orig-fun args)))
-
-;; Apply advice to markdown-mode's flyspell predicate
-(with-eval-after-load 'markdown-mode
-  (advice-add 'markdown-flyspell-check-word-p :around
-              #'greek-hebrew-flyspell-advice))
-
-;; For text-mode and org-mode, set the predicate directly
-(add-hook 'text-mode-hook
-          (lambda ()
-            (unless (derived-mode-p 'markdown-mode)
-              (setq-local flyspell-generic-check-word-predicate
-                          #'greek-hebrew-flyspell-verify))))
-
-(add-hook 'org-mode-hook
-          (lambda ()
-            (setq-local flyspell-generic-check-word-predicate
-                        #'greek-hebrew-flyspell-verify)))
-
-(set-fontset-font "fontset-default" 'greek (font-spec :family "SBL BibLit" :size 22))
-(set-fontset-font "fontset-default" 'hebrew (font-spec :family "SBL BibLit" :size 20))
-
-(provide 'my-ancient-greek-tweaks)

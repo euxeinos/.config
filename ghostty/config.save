@@ -14,7 +14,7 @@ theme                   = ayu
 # background-opacity      = 0.70
 # background-blur-radius  = 40
 # custom-shader = /Users/${config.home.username}/.config/ghostty/shaders/sparks-from-fire.glsl
-window-theme            = auto 
+# window-theme            = auto 
 
 # Cursor
 cursor-opacity          = 0.8
@@ -44,7 +44,6 @@ keybind                 = global:ctrl+shift+5=toggle_quick_terminal
 
 # ADDED BY ALEXEY
 window-inherit-working-directory = true
-command                 = /run/current-system/sw/bin/bash
 shell-integration       = detect
 macos-window-shadow     = false 
 macos-icon =  blueprint

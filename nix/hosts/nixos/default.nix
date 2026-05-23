@@ -1,8 +1,6 @@
 { agenix, config, lib, pkgs, modulesPath, user, ... }:
 
 let
-  user = "eupontos";
-  # myEmacs = import ../../modules/shared/config/emacs/emacs.nix { inherit pkgs; };
 in
 
 {
@@ -28,7 +26,7 @@ in
   };
 
   programs = {
-    zsh.enable = true;
+    bash.enableCompletion = true;
     nyxt.enable = true;
     gnupg = {
       agent = {
@@ -70,7 +68,7 @@ in
     isNormalUser = true;
     description  = "Alexey Kotomin";
     extraGroups  = [ "networkmanager" "wheel" ];
-    shell = pkgs.zsh;
+    shell = pkgs.bash;
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -132,9 +130,6 @@ in
       experimental-features = [ "nix-command" "flakes" ];
     };
     package      = pkgs.nix;
-    # extraOptions = ''
-    #   experimental-features = nix-command flakes
-    # '';
   };
 
   system.stateVersion = "25.05";

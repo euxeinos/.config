@@ -28,10 +28,10 @@ M = 'secondary'
 preset = 'qwerty'
 
 [gaps]
-inner.horizontal = 3 
-inner.vertical = 3 
-outer.left = [{ monitor.main = 3 }, { monitor."LG" = 0 }, 0] 
-outer.bottom = [{ monitor.main = 3 }, { monitor."LG" = 0 }, 0] 
+inner.horizontal = 3
+inner.vertical = 3
+outer.left = [{ monitor.main = 3 }, { monitor."LG" = 0 }, 0]
+outer.bottom = [{ monitor.main = 3 }, { monitor."LG" = 0 }, 0]
 outer.top = [{ monitor.main = 0 }, { monitor."LG" = 0 }, 0]
 outer.right = [{ monitor.main = 3 }, { monitor."LG" = 0 }, 0]
 
@@ -153,7 +153,7 @@ run = 'move-node-to-workspace C'
 # --- 💾 Emacs ---
 [[on-window-detected]]
 if.app-name-regex-substring = 'emacs'
-run = ['layout tiling', 'move-node-to-workspace E']
+run = 'move-node-to-workspace E'
 
 
 # --- 👻 Ghostty ---
@@ -359,6 +359,3 @@ run = 'move-node-to-workspace V'
 [[on-window-detected]]
 if.app-id = 'com.apple.Dictionary'
 run = 'move-node-to-workspace V'
-
-
-

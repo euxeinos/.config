@@ -1,18 +1,14 @@
-{ config, pkgs, ... }:
+{ config, pkgs, emacs-overlay, telega-overlay, ... }:
 
 let
-  emacsOverlaySha256 = "1kv3y70x0dsk3d3b4gpi9lyc9fi030m9z1pc5g7dxfgd856zp6jh";
   myEmacs = import ./config/emacs/emacs.nix { inherit pkgs; };
-  telegaOverlaySha256 = "1vv41rclll90kksl1096dyim4lhzi9rawc56i45bc38cilabgxw9";
 in
 {
   nixpkgs = {
     config = {
       allowUnfree = true;
-      allowBroken = true;
-      allowUnsupportedSystem = true;
     };
-    
+
     overlays =
       let
         path = ../../overlays;
@@ -23,13 +19,7 @@ in
              pathExists (path + ("/" + n + "/default.nix"))))
               (attrNames (readDir path)))
 
-      ++ [(import (builtins.fetchTarball {
-        url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
-        sha256 = emacsOverlaySha256;
-      }))]
-      ++ [(import (builtins.fetchTarball {
-        url = "https://github.com/echepolus/telega-overlay/archive/main.tar.gz";
-        sha256 = telegaOverlaySha256;
-      }))];
+      ++ [ emacs-overlay.overlays.default ]
+      ++ [ (import telega-overlay) ];
   };
 }

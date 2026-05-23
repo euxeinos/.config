@@ -14,10 +14,9 @@ in
     homeDirectory = "/home/${user}";
     packages = pkgs.callPackage ./packages.nix {};
     file = shared-files // import ./files.nix { inherit user; };
-    stateVersion = "21.05";
+    stateVersion = "25.05";
   };
 
-  # Use a dark theme
   gtk = {
     enable = true;
     iconTheme = {
@@ -30,7 +29,6 @@ in
     };
   };
 
-  # Screen lock
   services = {
     # Auto mount devices
     udiskie.enable = true;
@@ -71,7 +69,6 @@ in
           sticky_history = "yes";
           history_length = 20;
           history = "ctrl+grave";
-          browser = "google-chrome-stable";
           always_run_script = true;
           title = "Dunst";
           class = "Dunst";

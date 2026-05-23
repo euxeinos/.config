@@ -7,6 +7,7 @@ with pkgs; [
   hack-font
   jetbrains-mono
   noto-fonts
-  noto-fonts-emoji
+  noto-fonts-color-emoji
   geist-font
+  nerd-fonts.fira-code
 ]

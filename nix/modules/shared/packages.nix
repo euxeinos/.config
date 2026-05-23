@@ -1,29 +1,11 @@
 { pkgs, ... }:
 let
   myPython = pkgs.python3.withPackages (ps: with ps; [
-    slpp
-    pip
-    rich
-    mysql-connector
-    virtualenv
-    black
-    requests
-    faker
-    textual
-    pyqt5
+    # Emacs python packages (epc, sexpdata needed for emacs-epc bridge)
     epc
     sexpdata
-    six
-    inflect
-    unidecode
-    pyaml
-    feedparser
-    python-dateutil
+    ipython
   ]);
-
-  myPHP = pkgs.php82.withExtensions ({ enabled, all }: enabled ++ (with all; [
-    xdebug
-  ]));
 
   myFonts = import ./fonts.nix { inherit pkgs; };
 in
@@ -33,123 +15,92 @@ with pkgs; [
   act # Run Github actions locally
   age # File encryption tool
   aspell # Spell checker
-  aspellDicts.en # English dictionary for aspell
-  aspellDicts.el # Modern Greek dictionary for aspell
-  aspellDicts.grc # Ancient Greek dictionary for aspell
-  aspellDicts.la # Latin dictionary for aspell
-  
+  aspellDicts.en
+  aspellDicts.el
+  aspellDicts.grc
+  aspellDicts.la
 
   # B
-  bash-completion # Bash completion scripts
+  bash-completion
   bat # Cat clone with syntax highlighting
-  bear
-  
+
   # C
-  coreutils # Basic file/text/shell utilities
-  clang-tools
-  cppcheck
-  check
+  coreutils
 
   # D
-  direnv # Environment variable management per directory
-  difftastic # Structural diff tool
+  direnv
+  difftastic
   djvulibre
   docker
-  
+
   # E
   exiftool
+
   # F
-  fd # Fast find alternative
-  fzf # Fuzzy finder
+  fd
+  fzf
   ffmpeg
- 
+
   # G
   gh # GitHub CLI
-  glow # Markdown renderer for terminal
-  ghostscript # PDF to images converter
-  gdb
-  gcc
+  ghostscript # PDF rendering
   gnupg
-  graphviz
-    
+
   # H
-  htop # Interactive process viewer
-  hunspell # Spell checker
+  htop
+  hunspell
   hunspellDicts.en_US
   hunspellDicts.ru_RU
   hunspellDicts.el_GR
 
   # I
-  iftop # Network bandwidth monitor
-  
-  # J
-
-  # K
-  killall # Kill processes by name
+  iftop
 
   # L
-  lnav # Log file navigator
+  lnav
   libpng
-  lldb
 
   # M
-  myPHP # Custom PHP with extensions
-  myPython # Custom Python with packages
+  myPython
   math-preview
 
   # N
   ncurses
   ncdu
-  nodejs_20
   nethack
 
   # O
-  openssh # SSH client and server
-  openjdk
+  openssh
 
   # P
-  pass # Stores, retrieves, generates, synchronizes passwords
-  pandoc # Document converter
-  poppler # PDF to plain text tool
-  pkg-config
-  plantuml
-
-  # Q
-  qt5.qtbase
-  
+  pass
+  pandoc
+  poppler
 
   # R
-  ripgrep # Fast text search tool
-  rbenv
+  ripgrep
 
   # S
-  sqlite # SQL database engine
+  sqlite
   symlinks
-  sdcv
+  starship
 
   # T
-  tree # Directory tree viewe
+  tree
 
   # U
-  unrar # RAR archive extractor
-  unzip # ZIP archive extractor
-  uv # Python package installer
+  unrar
+  unzip
+  uv # Python package manager (system-level tool)
 
-  # V
-  
-  
   # W
-  wget # File downloader
-  w3m
-
-  # X
+  wget
 
   # Y
-  
-  
+  yt-dlp
+
   # Z
-  zip # ZIP archive creator
-  zsh-powerlevel10k # Zsh theme
+  zip
   zoxide
   zlib
 

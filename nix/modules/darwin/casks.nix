@@ -3,7 +3,6 @@ _:
 [
   # A
   "anki"
-  "android-platform-tools"
  
   # B
 
@@ -47,7 +46,6 @@ _:
   
   # W
   "wireshark-app"
-  "warp"
 
   # X
 

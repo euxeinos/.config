@@ -7,6 +7,5 @@ shared-packages ++ [
   colima
   kanata-with-cmd
   xray
-  xclip
   pngpaste
 ]

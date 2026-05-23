@@ -7,22 +7,24 @@ let
     general
     quelpa
     quelpa-use-package
-    vterm
 
     # B
     
     # C
     calibredb
-    citar
     counsel
+    citar
+    citar-denote
     
     # D
-    #djvu
     
+    # C
+    corfu
+    cape
+
     # E
-    evil
-    evil-collection
     eglot
+    envrc
 
     # F
     flycheck
@@ -54,9 +56,8 @@ let
     key-chord
     
     # Project management
-    projectile
-    ripgrep
-    deadgrep
+    #    ripgrep
+    #    deadgrep
     
     # Org mode
     emacsql
@@ -64,7 +65,6 @@ let
     visual-fill-column
     
     # Writing
-    writeroom-mode
     flyspell-correct
     reverse-im
     denote
@@ -94,10 +94,8 @@ let
     # H
     
     # I
-    indent-bars
-    
+      
     # G
-    gruber-darker-theme
     
     # L
     
@@ -111,14 +109,10 @@ let
     # O
     org-modern
     org-superstar
-    org-noter
 
     # P
-    plantuml-mode
     
     # S
-    sdcv
-    quick-sdcv
 
     # T
     melpaPackages.telega

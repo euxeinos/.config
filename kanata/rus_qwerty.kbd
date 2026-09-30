@@ -1,30 +1,30 @@
 (deflayer rus ;; йцукен
-@lfun   🔅   🔆   @mc @sls @dtn      @dnd ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊   _
-@mos    1    2    3    4    5        6    7    8    9    0    -    _    _
+@lfun   🔅   🔆   @mc @sls _      _ ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊   _
+ _      1    2    3    4    5        6    7    8    9    0    -    _    _
 
- _     @й   @lц  @у   @к   @е        @н   @г   @ш   @lщ  @з   @х   @ъ @mos 
-@hyp   @hф  @hы  @hв  @hа  @п        @р   @hо  @hл  @hд  @hж  @э   \ 
+ _     @й   @lц  @у   @к   @е        @н   @г   @ш   @lщ  @з   @х   @ъ   _
+@hyp   @hф  @hы  @hв  @hа  @п        @р   @hо  @hл  @hд  @hж  @э   \
  _     @lя  @ч   @с   @м   @и   @ё   @т   @ьъ  @б   @*ю  @., rsft
  _               _ @lfun @lcmd @nav  @rcmd @rfun
  )
 
-(deflayer alt-rus-eng 
-@lfun   🔅   🔆   @mc @sls @dtn      @dnd ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊   _
+(deflayer alt-rus-eng
+@lfun   🔅   🔆   @mc @sls _      _ ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊   _
 
-@mos   1   2   3   4   5         6   7   8   9   0  -    _    _
+ _     1   2   3   4   5         6   7   8   9   0  -    _    _
 
- _     q   w   f   p   b         j   l   u   y   ;   [   ]   _   
+ _     q   w   f   p   b         j   l   u   y   ;   [   ]   _
 @hyp   a   r   s   t   g         m   n   e   i   o   '   \
- _     z   x   c   d   v   `    k   h   ,   .   /   rsft
+ _     z   x   c   d   v   `     k   h   ,   .   /   rsft
  _            _  @lfun @lcmd   @nav  @rcmd @rfun
  )
 
-(deflayer ctl-rus-eng 
-@lfun   🔅   🔆   @mc @sls @dtn      @dnd ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊   _
+(deflayer ctl-rus-eng
+@lfun   🔅   🔆   @mc @sls _      _ ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊   _
 
-@mos   1   2   3   4   5         6   7   8   9   0  -    _    _
+ _     1   2   3   4   5         6   7   8   9   0  -    _    _
 
- _     q   w   f   p   b         j   l   u   y   ;   [   ]   _   
+ _     q   w   f   p   b         j   l   u   y   ;   [   ]   _
 @hyp   a   r   s   t   g         m   n   e   i   o   '   \
  _     z   x   c   d   v   `    k   h   ,   .   /   rsft
  _            _  @lfun @lcmd   @nav  @rcmd @rfun
@@ -92,18 +92,5 @@
   hл (tap-hold $tap-time $hold-index @л (multi ralt (layer-while-held alt-rus-eng)))
 ;;   hл (tap-hold $tap-time $hold-middle @л (multi lalt (layer-while-held eng)))
    hд (tap-hold $tap-time $hold-ring @д (multi lmet (layer-while-held eng)))
-   hж (tap-hold $tap-time $hold-pinky @ж (layer-toggle hyper))
-)
-
-(platform (macos)
-  (defalias
-   lя (tap-hold $tap-time $hold-pinky @я (layer-toggle mos_mac))
-  )
-)
-
-
-(platform (win winiov2 wintercept linux)
-  (defalias
-   lя (tap-hold $tap-time $hold-pinky @я (layer-toggle mos))
-  )
+   hж (tap-hold $tap-time $hold-pinky @ж (layer-toggle app))
 )

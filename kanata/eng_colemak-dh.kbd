@@ -1,11 +1,11 @@
-(deflayer eng 
-@lfun   🔅   🔆   @mc @sls @dtn      @dnd ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊   _
+(deflayer eng
+@lfun   🔅   🔆   @mc @sls _         _ ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊   _
 
-@mos   1    2    3    4    5         6    7    8    9    0     -    _    _
+ _     1    2    3    4    5         6    7    8    9    0     -    _    _
 
- _    @*q  @lw   f    p    b         j    l    u   @ly  @;or'  [    ] _   
+ _    @*q  @lw   f    p    b         j    l    u   @ly  @;or'  [    ] _
 @hyp  @ha  @hr  @hs  @ht   g         @*m  @hn  @he  @hi  @ho   @'or;  \
- _    @lz  @*x  @*c   d    v    `    k    h    @s1  @s2  @s3   rsft
+ _     z   @*x  @*c   d    v    `    k    h    @s1  @s2  @s3   rsft
  _            _  @lfun @lcmd   @nav  @rcmd @rfun
 )
 
@@ -20,9 +20,9 @@
   ha (tap-hold $tap-time $hold-pinky a (layer-toggle app))
   hs (tap-hold $tap-time $hold-middle s lalt)
   he (tap-hold $tap-time $hold-middle e lalt)
-  ho (tap-hold $tap-time $hold-pinky o (layer-toggle hyper))
+  ho (tap-hold $tap-time $hold-pinky o (layer-toggle app))
 )
- 
+
 (environment (ALT_SYMBOLS "") (defalias ;or' ; 'or; ' s1 , s2 . s3 /))
 (environment (ALT_SYMBOLS XELOR) (defalias ;or' @*' 'or; ; s1 @*,? s2 @.! s3 -))
 
@@ -32,16 +32,4 @@
   eng] ]
   eng` grv
   eng' @'or;
-)
-
-(platform (macos)
-  (defalias
-    lz (tap-hold $tap-time $hold-pinky z (layer-toggle mos_mac))
-  )
-)
-
-(platform (win winiov2 wintercept linux)
-  (defalias
-    lz (tap-hold $tap-time $hold-pinky z (layer-toggle mos))
-  )
 )

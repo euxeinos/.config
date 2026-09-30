@@ -83,9 +83,20 @@
   '' (switch ((base-layer rus)) (macro @en 50 ' 20 ' 20 left  50 @ru) break () (macro ' 20 ' 20 left) break )
   `` (switch ((base-layer rus)) (macro @en 50 ` 20 ` 20 left  50 @ru) break () (macro ` 20 ` 20 left) break )
   “”“ (fork @“ @“” (lsft rsft))
-  td“” (switch ((base-layer rus)) (tap-dance-eager 400 ( (macro S-2) (macro bspc S-2 S-2 left) (macro S-2 S-2 left) (macro S-2 S-2 left))) break () (tap-dance-eager 300 ( (macro S-') (macro bspc S-' S-' left) (macro S-' S-' left) (macro S-' S-' left))) break )
-  td'' (switch ((base-layer rus)) (tap-dance-eager 400 ( (macro @en 50 ' 50 @ru) (macro @en 50 ' 30 @ru 20 left) (macro @en 50 ' ' 30 @ru 20 left) (macro @en 50 ' ' 30 @ru 20 left))) break () (tap-dance-eager 300 ( (macro ') (macro ' left) (macro ' ' left) (macro ' ' left))) break )
-  td`` (switch ((base-layer rus)) (tap-dance-eager 400 ( (macro @en 50 ` 50 @ru) (macro @en 50 ` 30 @ru 20 left) (macro @en 50 ` ` 30 @ru 20 left) (macro @en 50 ` ` 30 @ru 20 left))) break () (tap-dance-eager 300 ( (macro `) (macro ` left) (macro ` ` left) (macro ` ` left))) break )
+td“” (tap-dance-eager 300 (
+    (macro S-2)
+    (macro S-2 S-2 left)
+  ))
+
+  td'' (tap-dance-eager 300 (
+    (macro ')
+    (macro ' ' left)
+  ))
+td`` (tap-dance-eager 300 (
+    (macro `)
+    (macro ` ` left)
+  ))
+
   brc (macro S-9 20 S-0 20 left)
   []  (switch ((base-layer rus)) (macro @en 50 [ 20 ] 20 left 50 @ru) break () (macro [ 20 ] 20 left) break )
   {}  (switch ((base-layer rus)) (macro @en 50 S-[ 20 S-] 20 left 50 @ru) break () (macro S-[ 20 S-] 20 left) break )
@@ -101,62 +112,6 @@
   |¦ (fork @| @¦ (lsft rsft))
   <« (fork @< @« (lsft rsft))
   >» (fork @> @» (lsft rsft))
-
-  ;; -------------------------------------------------------------------------------------
-  ;; magic letters
-
-;;*k (tap-dance 300 (
-;;  (switch
-;;    ((key-history b 1)) (macro e f o r e) break
-;;    ((key-history w 1)) (macro h i c h) break
-;;    ((key-history m 1)) (macro e n t) break
-;;    ((key-history q 1)) (macro u e) break
-;;    ((key-history n 1)) (macro i o n) break
-;;    ((key-history t 1)) (macro i o n) break
-;;    ((key-history j 1)) (macro u s t) break
-;;    ((key-history v 1)) (macro e r) break
-;;    ((key-history . 1)) (macro . /) break
-;;    ((key-history , 1)) (macro spc b u t) break
-;;    ((key-history - 1)) (macro S-.) break
-;;    ((key-history = 1)) (macro S-.) break
-;;    () k break
-;;  )
-;;  k)
-;;)
-
-  *q (switch
-    ((and (key-history g 2) (key-history b 1))) (macro 30 bspc bspc 30 S-g 10 S-b 10 S-q 30) break
-    () q break
-  )
-
-  *m (switch
-    ((and (key-history c 2) (key-history r 1))) (macro 30 bspc bspc 30 S-c 10 S-r 10 S-m 30) break
-    () m break
-  )
-
-  *c (switch
-    ((and (key-history s 3) (key-history f 2) (key-history m 1))) (macro 30 bspc bspc bspc 30 S-s 10 S-f 10 S-m 10 S-c 30) break
-    ((and (key-history l 3) (key-history m 2) (key-history r 1))) (macro 30 bspc bspc bspc 30 S-l 10 S-m 10 S-r 10 S-c 30) break
-    () c break
-  )
-
-  *x (switch
-    ((key-history s 1)) c break
-    () x break
-  )
-
-  *' (switch
-    ((key-history spc 1)) (macro S-' 20 S-' 20 left) break
-    ((and (key-history 0 2) (key-history left 1))) (macro S-' 20 S-' 20 left) break
-    ((and (key-history ] 2) (key-history left 1))) (macro S-' 20 S-' 20 left) break
-    ((and (key-history , 2) (key-history left 1))) (macro S-' 20 S-' 20 left) break
-    () ' break
-  )
-
-  *,? (switch
-    ((or (key-history . 1) (key-history / 1))) (multi bspc @brc) break
-    () @,? break
-  )
 
   ;; -------------------------------------------------------------------------------------
   ;; Numbers with shift, to be similar with sym layer
@@ -195,4 +150,3 @@
   h5 (tap-hold $tap-time $hold-middle 5 lmet)
   h6 (tap-hold $tap-time $hold-ring 6 lalt)
 )
-

@@ -85,7 +85,7 @@
 
  _  @qlz @cls @tlft @trgt @lnch        ins @home   up  @end @del  _   _   _
 @all @all @ocm @mopt @S-T @prnt          _  left down rght bspc  _   _
- _  M-z M-x _ C-S-tab  M-v   C-tab   _  pgup @file pgdn @kill _
+ _  M-z M-x M-c C-S-tab  M-v   C-tab   _  pgup @file pgdn @kill _
  _              _   @lfun @lcmd  @nav  @lfun @sym
 )
 

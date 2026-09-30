@@ -9,7 +9,6 @@
  rctl   lctl  lalt  lmet  spc  rmet  ralt
 )
 
-
 ;; BUTTON DEFINITIONS ==================================================================
 
 ;; -------------------------------------------------------------------------------------
@@ -35,9 +34,9 @@
   ;; -------------------------------------------------------------------------------------
   ;; layouts switching
 
-  eng (multi (layer-switch eng) @en)
-  rus (multi (layer-switch rus) @ru)
-  gre (multi (layer-switch gre) @gr)
+  eng (multi (layer-switch eng) (macro @en 50))
+  rus (multi (layer-switch rus) (macro @ru 50))
+  gre (multi (layer-switch gre) (macro @gr 50))
   qwe (multi (layer-switch qwe) @en)
 
   ;; -------------------------------------------------------------------------------------
@@ -174,7 +173,7 @@
 (defchordsv2
 ;; в скобках указаны клавиши как они помечены в QWERTY
   ;; left side
-  (e r) @eng $chord-time all-released    (          sym fun nav mos    )
+  (e r) @eng $chord-time all-released    ( eng rus gre qwe sym fun nav mos )
 ;;(w e) @rus $chord-time all-released    (          sym fun nav mos    )
   (x c) @_   $chord-time all-released    (          sym     nav mos qwe)
   (c v) -    $chord-time all-released    (          sym     nav mos qwe)
@@ -185,8 +184,8 @@
   (w e) @aern $chord-time all-released ( )
 
   ;; right side
-  (j k) @eng $chord-time all-released    (          sym fun nav mos    )
-  (k l) @rus $chord-time all-released    (          sym fun nav mos    )
+  (j k) @eng $chord-time all-released    (  )
+  (k l) @rus $chord-time all-released    (  )
   (j i) @“”  $chord-time all-released    (          sym fun nav mos qwe)
   (h u) @''  $chord-time all-released    (          sym fun nav mos qwe)
   (i k) @brc $chord-time all-released    (          sym fun nav mos qwe)

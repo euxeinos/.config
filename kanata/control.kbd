@@ -1,8 +1,9 @@
 (defalias
+
   ;; system combinations to switch languages
-  en C-S-8
-  ru C-S-9
-  gr C-S-7
+  en (cmd "sh" "-c" "echo com.apple.keylayout.USExtended > /tmp/kanata-layout-switch")
+  ru (cmd "sh" "-c" "echo com.apple.keylayout.RussianWin > /tmp/kanata-layout-switch")
+  gr (cmd "sh" "-c" "echo com.apple.keylayout.GreekPolytonic > /tmp/kanata-layout-switch")
 
   ;; other alias
   prxy M-S-p
@@ -21,7 +22,7 @@
   prnt (tap-dance 400 ( (cmd "open" "raycast://extensions/huzef44/screenocr/recognize-text") (macro M-S-4 spc) M-S-3 )) ;; Make a screenshot - region, window, screen
   redo M-S-z
   del C-d
-  all (tap-hold $tap-time $hold-time M-a (layer-toggle fun)) 
+  all (tap-hold $tap-time $hold-time M-a (layer-toggle fun))
   S-T (tap-hold-press $tap-time $hold-time tab lalt)
   vstav (tap-dance 200 ( M-v (macro M-S-v 50 M-2) (macro M-S-v 50 M-3) (macro M-S-v 50 M-4) (macro M-S-v 50 M-5)))
   cpyc (tap-dance 400 ( M-c (macro A-S-left M-c right)))
@@ -38,7 +39,7 @@
   sls M-spc ;; Spotlight Search
   dtn S-C-A-M-f5 ;; Dictation
   dnd S-C-A-M-f6 ;; Do Not Disturb
-  
+
 
   ;; launching applications
   browser_en (macro @launch 400 S-s a f a r i 400 ret)
@@ -89,7 +90,7 @@
     ) break
     () (one-shot 500 lmet) break
   )
- 
+
   ;; -------------------------------------------------------------------------------------
   ;; fun
   dr0 (dynamic-macro-record 0)

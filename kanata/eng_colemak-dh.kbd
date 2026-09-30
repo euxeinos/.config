@@ -1,11 +1,11 @@
 (deflayer eng
-@lfun   🔅   🔆   @mc @sls _         _ ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊   _
+@lfun   🔅   🔆  _    _    _         _ ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊   _
 
  _     1    2    3    4    5         6    7    8    9    0     -    _    _
 
- _    @*q  @lw   f    p    b         j    l    u   @ly  @;or'  [    ] _
-@hyp  @ha  @hr  @hs  @ht   g         @*m  @hn  @he  @hi  @ho   @'or;  \
- _     z   @*x  @*c   d    v    `    k    h    @s1  @s2  @s3   rsft
+ _     q  @lw   f    p    b         j    l    u   @ly  @;or'  [    ] _
+@hyp  @ha  @hr  @hs  @ht   g          m  @hn  @he  @hi  @ho   @'or;  \
+ _     z   x  c   d    v    `    k    h    @s1  @s2  @s3   rsft
  _            _  @lfun @lcmd   @nav  @rcmd @rfun
 )
 
@@ -24,7 +24,7 @@
 )
 
 (environment (ALT_SYMBOLS "") (defalias ;or' ; 'or; ' s1 , s2 . s3 /))
-(environment (ALT_SYMBOLS XELOR) (defalias ;or' @*' 'or; ; s1 @*,? s2 @.! s3 -))
+(environment (ALT_SYMBOLS XELOR) (defalias ;or' ; 'or; ; s1 , s2 @.! s3 -))
 
 (defalias
   ;; extra letters which doesn't fit 10 columns

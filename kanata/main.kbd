@@ -110,8 +110,8 @@
  f13     f1   f2   f3   f3   f5        f6   f7   f8   f9   f10    f11 f12 @lrd
 
  _  @qlz @cls @tlft @trgt @lnch        ins @home   up  @end @del  _   _   _
-@all @all @ocm @mopt @S-T @prnt      @mcon left down rght bspc  _   _
- _  M-z M-x @cpyc C-S-tab @vstav C-tab   _  pgup @file pgdn @kill _
+@all @all @ocm @mopt @S-T @prnt          _  left down rght bspc  _   _
+ _  M-z M-x _ C-S-tab  M-v   C-tab   _  pgup @file pgdn @kill _
  _              _   @lfun @lcmd  @nav  @lfun @sym
 )
 
@@ -140,22 +140,22 @@
 
 (defcfg
   concurrent-tap-hold yes
-  ;;danger-enable-cmd yes
+  danger-enable-cmd yes
   process-unmapped-keys yes
 )
 (defchordsv2
-  (e r) @eng $chord-time all-released    ( eng rus gre qwe sym fun nav )
-  (j k) @eng $chord-time all-released    ( eng rus gre qwe sym fun nav )
-  (k l) @rus $chord-time all-released    ( eng rus gre qwe sym fun nav )
+  (e r) @eng $chord-time all-released    (  )
+  (j k) @eng $chord-time all-released    (  )
+  (k l) @rus $chord-time all-released    (  )
 
-  (e f) @''  $chord-time all-released    ( sym fun nav qwe )
-  (j i) @“”  $chord-time all-released    ( sym fun nav qwe )
-  (w r) @<>  $chord-time all-released    ( sym fun nav qwe )
-  (s f) @{}  $chord-time all-released    ( sym fun nav qwe )
-  (u o) @[]  $chord-time all-released    ( sym fun nav qwe )
+  (e f) @''  $chord-time all-released    (  )
+  (j i) @“”  $chord-time all-released    (  )
+  (w r) @<>  $chord-time all-released    (  )
+  (s f) @{}  $chord-time all-released    (  )
+  (u o) @[]  $chord-time all-released    (  )
 
-  (f j) @ghoqui  $chord-time all-released ( eng rus )
-  (f spc) @a⇥spc $chord-time all-released ( eng rus )
+  (f j) @ghoqui  $chord-time all-released (  )
+  (f spc) @a⇥spc $chord-time all-released (  )
 )
 
 (defalias

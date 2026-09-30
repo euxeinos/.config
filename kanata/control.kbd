@@ -8,7 +8,6 @@
   trgt M-S-]
   home (fork M-left M-up (lalt))
   end (fork M-rght M-down (lalt))
-  mcon mctl ;; Mission Control, MacOS native
   file A-M-spc ;; Launch file manager
   qlz (multi (release-key lsft) (release-key rsft) M-q)
   cls M-w
@@ -17,18 +16,10 @@
   del C-d
   all (tap-hold $tap-time $hold-time M-a (layer-toggle fun))
   S-T (tap-hold-press $tap-time $hold-time tab lalt)
-  vstav (tap-dance 200 ( M-v (macro M-S-v 50 M-2) (macro M-S-v 50 M-3) (macro M-S-v 50 M-4) (macro M-S-v 50 M-5)))
-  cpyc (tap-dance 400 ( M-c (macro A-S-left M-c right)))
 
   ;; Aerospace
   a⇥spc C-A-M-tab
 
-  ;; macOS function key glyphs
-  mc C-up ;; Mission Control
-  sls M-spc ;; Spotlight Search
-
-
-    ;; launching applications
   safari (cmd "open" "-a" "Safari")
   ghostty (cmd "open" "-a" "Ghostty")
   emacs (cmd "open" "raycast://script-commands/emacsclient")
@@ -75,7 +66,6 @@
   aerf C-A-M-f
   aerp C-A-M-p
   swbuf (macro C-x b)
-  aerz C-A-M-z
   aerx C-A-M-e
   aerc C-A-M-c
   aerv C-A-M-v
@@ -94,7 +84,4 @@
 
   ;; --- Aerospace Join ---
   ajh C-A-lft
-  ajj C-A-down
-  ajk C-A-up
-  ajl C-A-rght
 )

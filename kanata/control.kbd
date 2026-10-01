@@ -1,87 +1,86 @@
 (defalias
+    en (cmd "sh" "-c" "echo com.apple.keylayout.USExtended > /Users/alexeykotomin/.config/kanata/layout-switch.fifo")
+    ru (cmd "sh" "-c" "echo com.apple.keylayout.RussianWin > /Users/alexeykotomin/.config/kanata/layout-switch.fifo")
+    gr (cmd "sh" "-c" "echo com.apple.keylayout.GreekPolytonic > /Users/alexeykotomin/.config/kanata/layout-switch.fifo")
 
-  en (cmd "sh" "-c" "echo com.apple.keylayout.USExtended > /tmp/kanata-layout-switch")
-  ru (cmd "sh" "-c" "echo com.apple.keylayout.RussianWin > /tmp/kanata-layout-switch")
-  gr (cmd "sh" "-c" "echo com.apple.keylayout.GreekPolytonic > /tmp/kanata-layout-switch")
+    tlft M-S-[
+    trgt M-S-]
+    home (fork M-left M-up (lalt))
+    end (fork M-rght M-down (lalt))
+    file A-M-spc ;; Launch file manager
+    qlz (multi (release-key lsft) (release-key rsft) M-q)
+    cls M-w
+    kill A-M-esc
+    prnt (tap-dance 400 ( (cmd "open" "raycast://extensions/huzef44/screenocr/recognize-text") (macro M-S-4 spc) M-S-3 )) ;; Make a screenshot - region, window, screen
+    del C-d
+    all (tap-hold $tap-time $hold-time M-a (layer-toggle fun))
+    S-T (tap-hold-press $tap-time $hold-time tab lalt)
 
-  tlft M-S-[
-  trgt M-S-]
-  home (fork M-left M-up (lalt))
-  end (fork M-rght M-down (lalt))
-  file A-M-spc ;; Launch file manager
-  qlz (multi (release-key lsft) (release-key rsft) M-q)
-  cls M-w
-  kill A-M-esc
-  prnt (tap-dance 400 ( (cmd "open" "raycast://extensions/huzef44/screenocr/recognize-text") (macro M-S-4 spc) M-S-3 )) ;; Make a screenshot - region, window, screen
-  del C-d
-  all (tap-hold $tap-time $hold-time M-a (layer-toggle fun))
-  S-T (tap-hold-press $tap-time $hold-time tab lalt)
+    ;; Aerospace
+    a⇥spc C-A-M-tab
 
-  ;; Aerospace
-  a⇥spc C-A-M-tab
+    safari (cmd "open" "-a" "Safari")
+    ghostty (cmd "open" "-a" "Ghostty")
+    emacs (cmd "open" "raycast://script-commands/emacsclient")
+    anki (cmd "open" "-a" "Anki")
+    zen (cmd "open" "-a" "Zen")
+    ghoqui C-S-5
+    lnch (tap-dance 500 ( @ghostty @emacs ))
 
-  safari (cmd "open" "-a" "Safari")
-  ghostty (cmd "open" "-a" "Ghostty")
-  emacs (cmd "open" "raycast://script-commands/emacsclient")
-  anki (cmd "open" "-a" "Anki")
-  zen (cmd "open" "-a" "Zen")
-  ghoqui C-S-5
-  lnch (tap-dance 500 ( @ghostty @emacs ))
+    rele (multi (release-key lsft) (release-key lalt) (release-key lctl) (release-key lmet) (release-key rsft) (release-key ralt) (release-key rctl) (release-key rmet))
+    lrd (tap-dance 400 (lrld @rele))
 
-  rele (multi (release-key lsft) (release-key lalt) (release-key lctl) (release-key lmet) (release-key rsft) (release-key ralt) (release-key rctl) (release-key rmet))
-  lrd (tap-dance 400 (lrld @rele))
-
-  lctl (switch ((base-layer rus))
-    (tap-hold $tap-time $hold-ring
-      (multi
-        (one-shot 500 (layer-while-held eng))
-        (one-shot 500 lctl)
-      )
-      lctl
-    ) break
-    () (one-shot 500 lctl) break
-  )
-  lmet (switch ((base-layer rus))
-    (tap-hold $tap-time $hold-ring
-      (multi
-        (one-shot 500 (layer-while-held eng))
-        (one-shot 500 lmet)
-      )
-      lmet
-    ) break
-    () (one-shot 500 lmet) break
-  )
+    lctl (switch ((base-layer rus))
+             (tap-hold $tap-time $hold-ring
+                 (multi
+                     (one-shot 500 (layer-while-held eng))
+                     (one-shot 500 lctl)
+                     )
+                 lctl
+                 ) break
+             () (one-shot 500 lctl) break
+             )
+    lmet (switch ((base-layer rus))
+             (tap-hold $tap-time $hold-ring
+                 (multi
+                     (one-shot 500 (layer-while-held eng))
+                     (one-shot 500 lmet)
+                     )
+                 lmet
+                 ) break
+             () (one-shot 500 lmet) break
+             )
 
     ;; --- Aerospace Workspaces ---
-  aer1 C-A-M-1
-  aer2 C-A-M-2
-  aer3 C-A-M-3
-  aer4 C-A-M-4
-  aer5 C-A-M-5
-  aer0 C-A-M-0
+    aer1 C-A-M-1
+    aer2 C-A-M-2
+    aer3 C-A-M-3
+    aer4 C-A-M-4
+    aer5 C-A-M-5
+    aer0 C-A-M-0
 
-  ;; --- Aerospace Commands ---
-  aerq M-q
-  aerw M-w
-  aerf C-A-M-f
-  aerp C-A-M-p
-  swbuf (macro C-x b)
-  aerx C-A-M-e
-  aerc C-A-M-c
-  aerv C-A-M-v
-  aerm C-A-M-t
-  aserv C-A-p
-  aer+ C-A-M-eql
-  aer- C-A-M-min
-  acco C-A-M-,
-  atls C-A-M-/
+    ;; --- Aerospace Commands ---
+    aerq M-q
+    aerw M-w
+    aerf C-A-M-f
+    aerp C-A-M-p
+    swbuf (macro C-x b)
+    aerx C-A-M-e
+    aerc C-A-M-c
+    aerv C-A-M-v
+    aerm C-A-M-t
+    aserv C-A-p
+    aer+ C-A-M-eql
+    aer- C-A-M-min
+    acco C-A-M-,
+    atls C-A-M-/
 
-  ;; --- Aerospace Motion (Colemak N-E-U-I) ---
-  aern (tap-dance 200 (C-A-M-lft C-A-lft))
-  aere (tap-dance 200 (C-A-M-down C-A-down))
-  aeru (tap-dance 200 (C-A-M-up C-A-up))
-  aeri (tap-dance 200 (C-A-M-rght C-A-rght))
+    ;; --- Aerospace Motion (Colemak N-E-U-I) ---
+    aern (tap-dance 200 (C-A-M-lft C-A-lft))
+    aere (tap-dance 200 (C-A-M-down C-A-down))
+    aeru (tap-dance 200 (C-A-M-up C-A-up))
+    aeri (tap-dance 200 (C-A-M-rght C-A-rght))
 
-  ;; --- Aerospace Join ---
-  ajh C-A-lft
-)
+    ;; --- Aerospace Join ---
+    ajh C-A-lft
+    )

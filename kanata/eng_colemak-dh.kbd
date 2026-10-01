@@ -12,7 +12,6 @@
 (defalias
   lw (tap-hold $tap-time $hold-pinky w (layer-toggle fun))
   ly (tap-hold $tap-time $hold-pinky y (layer-toggle swi))
-
   ht (tap-hold $tap-time $hold-index t lctl)
   hn (tap-hold $tap-time $hold-index n lctl)
   hr (tap-hold $tap-time $hold-ring r lmet)
@@ -27,7 +26,6 @@
 (environment (ALT_SYMBOLS XELOR) (defalias ;or' ; 'or; ; s1 , s2 @.! s3 -))
 
 (defalias
-  ;; extra letters which doesn't fit 10 columns
   eng[ [
   eng] ]
   eng` grv

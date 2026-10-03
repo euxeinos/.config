@@ -7,7 +7,7 @@
     trgt M-S-]
     home (fork M-left M-up (lalt))
     end (fork M-rght M-down (lalt))
-    file A-M-spc ;; Launch file manager
+    file A-M-spc
     qlz (multi (release-key lsft) (release-key rsft) M-q)
     cls M-w
     kill A-M-esc
@@ -16,7 +16,6 @@
     all (tap-hold $tap-time $hold-time M-a (layer-toggle fun))
     S-T (tap-hold-press $tap-time $hold-time tab lalt)
 
-    ;; Aerospace
     a⇥spc C-A-M-tab
 
     safari (cmd "open" "-a" "Safari")
@@ -24,8 +23,8 @@
     emacs (cmd "open" "raycast://script-commands/emacsclient")
     anki (cmd "open" "-a" "Anki")
     zen (cmd "open" "-a" "Zen")
+    chat (cmd "open" "-a" "ChatGPT Classic")
     ghoqui C-S-5
-    lnch (tap-dance 500 ( @ghostty @emacs ))
 
     rele (multi (release-key lsft) (release-key lalt) (release-key lctl) (release-key lmet) (release-key rsft) (release-key ralt) (release-key rctl) (release-key rmet))
     lrd (tap-dance 400 (lrld @rele))
@@ -66,7 +65,6 @@
     aerp C-A-M-p
     swbuf (macro C-x b)
     aerx C-A-M-e
-    aerc C-A-M-c
     aerv C-A-M-v
     aerm C-A-M-t
     aserv C-A-p

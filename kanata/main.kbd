@@ -83,9 +83,9 @@
  _        _    _    _    _    _        _    _    _    _    _      _   _   _
  f13     f1   f2   f3   f3   f5        f6   f7   f8   f9   f10    f11 f12 @lrd
 
- _  @qlz @cls @tlft @trgt @lnch        ins @home   up  @end @del  _   _   _
+ _  @qlz @cls @tlft @trgt _           ins @home   up  @end @del  _   _   _
 @all @all @ocm @mopt @S-T @prnt          _  left down rght bspc  _   _
- _  M-z M-x M-c C-S-tab  M-v   C-tab   _  pgup @file pgdn @kill _
+ _  M-z M-x M-c C-S-tab  M-v   C-tab   _  pgup @file pgdn @kill  _
  _              _   @lfun @lcmd  @nav  @lfun @sym
 )
 
@@ -94,7 +94,7 @@
  _    @aer1 @aer2 @aer3 @aer4 @aer5     _     _     _     _     @aer0  _   _   _
  _    @aerq @aerw @aerf @aerp @swbuf    @ajh  @aer- @aeru @aer+ @aserv _   _   _
  _    @anki _     @safari @emacs @ghostty @aerm @aern @aere @aeri _    _   _
- _    @zen  @aerx @aerc _     @aerv     _    _     @acco @aer- @aer+ @atls _
+ _    @zen  @aerx @chat _     @aerv     _    _     @acco @aer- @aer+ @atls _
  _                _     _     _   _     _     _
 )
 

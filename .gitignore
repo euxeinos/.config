@@ -3,15 +3,25 @@
 !.gitignore
 !/kanata/
 !/scripts/
-# !/sketchybar/
-!/nvim/
 !/ghostty/
-!/leader-key/
-!/yazi/
 !/aerospace/
-!/borders/
-!/archived_configs/
-!/espanso/
-!/clash-verge/
 
-nix/
+# Runtime / generated
+lnav/
+htop/
+kanata/*.fifo
+raycast/node-compile-cache/
+raycast/extensions/node_modules/
+
+# Home Manager generated files
+emacs/
+direnv/
+git/config
+git/ignore
+scripts/raycast-scripts/open-scripts/emacsclient
+
+# Private data
+Monero/
+gh/hosts.yml
+sing-box/config.json
+syncthing/

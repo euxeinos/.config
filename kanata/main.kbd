@@ -91,8 +91,8 @@
 
 (deflayer app
  _    _     _     _     _     _         _     _     _     _     _      _   _   _
- _    @aer1 @aer2 @aer3 @aer4 @aer5     _     _     _     _     @aer0  _   _   _
- _    @aerq @aerw @aerf @aerp @swbuf    @ajh  @aer- @aeru @aer+ @aserv _   _   _
+ _    _     _     _     _     _         @ajh  @aer- @aeru @aer+ @aserv _   _   _
+ _    @aerq @aerw @aerf @aerp @swbuf    _     @aer1 @aer2 @aer3 @aer4 @aer5 _   _
  _    @anki _     @safari @emacs @ghostty @aerm @aern @aere @aeri _    _   _
  _    @zen  @aerx @chat _     @aerv     _    _     @acco @aer- @aer+ @atls _
  _                _     _     _   _     _     _

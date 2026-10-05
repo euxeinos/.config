@@ -8,8 +8,8 @@
 # Optional parameters:
 # @raycast.icon /Users/alexeykotomin/.local/share/img/icons/nix.png
 # @raycast.packageName nixos-config
-# @raycast.description open ~/.config/nix/flake.nix via emacsclient
+# @raycast.description open ~/nix/flake.nix via emacsclient
 
-FILE="/Users/alexeykotomin/.config/nix/flake.nix"
+FILE="/Users/alexeykotomin/nix/flake.nix"
 
 /Users/alexeykotomin/.config/scripts/raycast-scripts/open-scripts/emacsclient -n "$FILE"

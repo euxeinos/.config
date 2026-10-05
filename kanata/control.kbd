@@ -11,7 +11,7 @@
     qlz (multi (release-key lsft) (release-key rsft) M-q)
     cls M-w
     kill A-M-esc
-    prnt (tap-dance 400 ( (cmd "open" "raycast://extensions/huzef44/screenocr/recognize-text") (macro M-S-4 spc) M-S-3 )) ;; Make a screenshot - region, window, screen
+    prnt M-S-4
     del C-d
     all (tap-hold $tap-time $hold-time M-a (layer-toggle fun))
     S-T (tap-hold-press $tap-time $hold-time tab lalt)
@@ -20,10 +20,11 @@
 
     safari (cmd "open" "-a" "Safari")
     ghostty (cmd "open" "-a" "Ghostty")
-    emacs (cmd "open" "raycast://script-commands/emacsclient")
     anki (cmd "open" "-a" "Anki")
     zen (cmd "open" "-a" "Zen")
+    emacs (cmd "open" "-a" "Emacs")
     chat (cmd "open" "-a" "ChatGPT Classic")
+    finder (cmd "open" "-a" "Finder")
     ghoqui C-S-5
 
     rele (multi (release-key lsft) (release-key lalt) (release-key lctl) (release-key lmet) (release-key rsft) (release-key ralt) (release-key rctl) (release-key rmet))

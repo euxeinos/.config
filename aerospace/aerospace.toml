@@ -18,19 +18,11 @@ automatically-unhide-macos-hidden-apps = true
 # 1. Привязка воркспейсов к мониторам
 # ==============================================================================
 [workspace-to-monitor-force-assignment]
-# --- 🖥️ Большой горизонтальный LG (основной рабочий фокус) ---
-E = ['^LG', 'secondary']  # Emacs (код, заметки, сплиты)
-S = ['^LG', 'secondary']  # Браузеры (веб, документация)
-G = ['^LG', 'secondary']  # Ghostty (терминал во всю ширину)
-B = ['^LG', 'secondary']  # Книги, PDF, Calibre
-# --- 💻 Экран MacBook (коммуникации, медиа, утилиты, фон) ---
-C = ['built-in', 'main']  # Чаты, звонки, почта (Telegram, Zoom, Mail)
-U = ['built-in', 'main']  # Медиаплееры и музыка
-P = ['built-in', 'main']  # Планирование (Календарь, Reminders, Things)
-V = ['built-in', 'main']  # Словари, Anki, Dash
-N = ['built-in', 'main']  # Заметки (Notes, TextEdit)
-0 = ['built-in', 'main']  # Системные утилиты, Finder, настройки
-M = ['built-in', 'main']  # Виртуальные машины (VMware)
+E = ['^LG', 'secondary']       # Emacs
+C = ['built-in', 'main']       # ChatGPT + Gemini
+G = ['^LG', 'secondary']       # Ghostty
+S = ['^LG', 'secondary']       # Safari
+F = ['built-in', 'main']       # Finder
 
 [key-mapping]
 preset = 'qwerty'
@@ -71,44 +63,34 @@ ctrl-alt-cmd-shift-right = 'move right'
 ctrl-alt-cmd-minus = 'resize smart -50'
 ctrl-alt-cmd-equal = 'resize smart +50'
 
-# --- Workspaces (Focus) ---
+
+# --- Fixed Workspaces ---
+ctrl-alt-cmd-e = 'workspace E'
+ctrl-alt-cmd-c = 'workspace C'
+ctrl-alt-cmd-g = 'workspace G'
+ctrl-alt-cmd-s = 'workspace S'
+ctrl-alt-cmd-f = 'workspace F'
+
+# --- Dynamic Workspaces ---
 ctrl-alt-cmd-1 = 'workspace 1'
 ctrl-alt-cmd-2 = 'workspace 2'
 ctrl-alt-cmd-3 = 'workspace 3'
 ctrl-alt-cmd-4 = 'workspace 4'
 ctrl-alt-cmd-5 = 'workspace 5'
-ctrl-alt-cmd-0 = 'workspace 0'
-ctrl-alt-cmd-b = 'workspace B'
-ctrl-alt-cmd-c = 'workspace C'
-ctrl-alt-cmd-e = 'workspace E'
-ctrl-alt-cmd-g = 'workspace G'
-ctrl-alt-cmd-m = 'workspace M'
-ctrl-alt-cmd-p = 'workspace P'
-ctrl-alt-cmd-r = 'workspace R'
-ctrl-alt-cmd-s = 'workspace S'
-ctrl-alt-cmd-v = 'workspace V'
-ctrl-alt-cmd-u = 'workspace U'
-ctrl-alt-cmd-n = 'workspace N'
-ctrl-alt-cmd-i = 'workspace I'
 
-# --- Workspaces (Move + Switch) ---
+# --- Move to Fixed Workspaces ---
+ctrl-alt-cmd-shift-e = ['move-node-to-workspace E --focus-follows-window']
+ctrl-alt-cmd-shift-c = ['move-node-to-workspace C --focus-follows-window']
+ctrl-alt-cmd-shift-g = ['move-node-to-workspace G --focus-follows-window']
+ctrl-alt-cmd-shift-s = ['move-node-to-workspace S --focus-follows-window']
+ctrl-alt-cmd-shift-f = ['move-node-to-workspace F --focus-follows-window']
+
+# --- Move to Dynamic Workspaces ---
 ctrl-alt-cmd-shift-1 = ['move-node-to-workspace 1 --focus-follows-window']
 ctrl-alt-cmd-shift-2 = ['move-node-to-workspace 2 --focus-follows-window']
 ctrl-alt-cmd-shift-3 = ['move-node-to-workspace 3 --focus-follows-window']
 ctrl-alt-cmd-shift-4 = ['move-node-to-workspace 4 --focus-follows-window']
 ctrl-alt-cmd-shift-5 = ['move-node-to-workspace 5 --focus-follows-window']
-ctrl-alt-cmd-shift-0 = ['move-node-to-workspace 0 --focus-follows-window']
-ctrl-alt-cmd-shift-b = ['move-node-to-workspace B --focus-follows-window']
-ctrl-alt-cmd-shift-c = ['move-node-to-workspace C --focus-follows-window']
-ctrl-alt-cmd-shift-e = ['move-node-to-workspace E --focus-follows-window']
-ctrl-alt-cmd-shift-g = ['move-node-to-workspace G --focus-follows-window']
-ctrl-alt-cmd-shift-p = ['move-node-to-workspace P --focus-follows-window']
-ctrl-alt-cmd-shift-r = ['move-node-to-workspace R --focus-follows-window']
-ctrl-alt-cmd-shift-s = ['move-node-to-workspace S --focus-follows-window']
-ctrl-alt-cmd-shift-v = ['move-node-to-workspace V --focus-follows-window']
-ctrl-alt-cmd-shift-u = ['move-node-to-workspace U --focus-follows-window']
-ctrl-alt-cmd-shift-n = ['move-node-to-workspace N --focus-follows-window']
-ctrl-alt-cmd-shift-i = ['move-node-to-workspace I --focus-follows-window']
 
 # --- Dual Monitor Navigation ---
 ctrl-alt-cmd-o       = 'focus-monitor --wrap-around next'
@@ -137,232 +119,34 @@ f = ['layout floating tiling', 'mode main']
 backspace = ['close-all-windows-but-current', 'mode main']
 
 # ==============================================================================
-# 4. Автоперемещение окон (Window Rules)
+# Fixed workspaces
 # ==============================================================================
 
-# --- ℹ️ INFORMATION / BROWSERS ---
+# --- Emacs ---
 [[on-window-detected]]
-if.app-id = 'app.zen-browser.zen'
-run = 'move-node-to-workspace S'
+if.app-name-regex-substring = 'emacs'
+run = 'move-node-to-workspace E'
 
-[[on-window-detected]]
-if.app-id = 'com.apple.Safari'
-run = 'move-node-to-workspace S'
-
-[[on-window-detected]]
-if.app-id = 'org.torproject.torbrowser'
-run = 'move-node-to-workspace S'
-
-# --- 💬 ChatGPT / Code ---
+# --- AI ---
 [[on-window-detected]]
 if.app-id = 'com.openai.chat'
 run = 'move-node-to-workspace C'
 
 [[on-window-detected]]
-if.app-id = 'com.apple.dt.Xcode'
+if.app-id = 'com.google.GeminiMacOS'
 run = 'move-node-to-workspace C'
 
-# --- 💾 Emacs ---
-[[on-window-detected]]
-if.app-name-regex-substring = 'emacs'
-run = 'move-node-to-workspace E'
-
-# --- 👻 Ghostty ---
+# --- Ghostty ---
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
 run = 'move-node-to-workspace G'
 
-# --- ⏯️ Media ---
+# --- Safari ---
 [[on-window-detected]]
-if.app-id = 'com.apple.Music'
-run = 'move-node-to-workspace U'
+if.app-id = 'com.apple.Safari'
+run = 'move-node-to-workspace S'
 
-[[on-window-detected]]
-if.app-id = 'com.apple.podcasts'
-run = 'move-node-to-workspace U'
-
-[[on-window-detected]]
-if.app-id = 'com.ntslive.ntsradio'
-run = 'move-node-to-workspace N'
-
-[[on-window-detected]]
-if.app-id = 'com.colliderli.iina'
-run = 'move-node-to-workspace U'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.QuickTimePlayerX'
-run = 'move-node-to-workspace U'
-
-[[on-window-detected]]
-if.app-id = 'org.videolan.vlc'
-run = 'move-node-to-workspace V'
-
-# --- 0️⃣ Other ---
-[[on-window-detected]]
-if.app-id = 'com.vmware.fusion'
-run = 'move-node-to-workspace M'
-
-[[on-window-detected]]
-if.app-id = 'com.utmapp.UTM'
-run = 'move-node-to-workspace V'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.AppStore'
-run = 'move-node-to-workspace A'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.Photos'
-run = 'move-node-to-workspace F'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.ScreenContinuity'
-run = 'move-node-to-workspace I'
-
-[[on-window-detected]]
-if.app-id = 'com.electron.exodus'
-run = 'move-node-to-workspace E'
-
-[[on-window-detected]]
-if.app-id = 'org.monero-project.monero-wallet-gui'
-run = 'move-node-to-workspace W'
-
-[[on-window-detected]]
-if.app-id = 'asc.onlyoffice.ONLYOFFICE'
-run = 'move-node-to-workspace O'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.Notes'
-run = 'move-node-to-workspace N'
-
-[[on-window-detected]]
-if.app-id = 'md.obsidian'
-run = 'move-node-to-workspace O'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.TextEdit'
-run = 'move-node-to-workspace N'
-
-# --- 📆 Planning ---
-[[on-window-detected]]
-if.app-id = 'com.apple.iCal'
-run = 'move-node-to-workspace P'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.reminders'
-run = 'move-node-to-workspace P'
-
-[[on-window-detected]]
-if.app-id = 'com.culturedcode.ThingsMac'
-run = 'move-node-to-workspace P'
-
-# --- 📚 Books ---
-[[on-window-detected]]
-if.app-id = 'com.apple.Preview'
-run = 'move-node-to-workspace B'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.iBooksX'
-run = 'move-node-to-workspace B'
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'E-book'
-run = 'move-node-to-workspace B'
-
-[[on-window-detected]]
-if.app-id = 'net.kovidgoyal.calibre'
-run = 'move-node-to-workspace B'
-
-# --- 🔧 System Administration ---
-[[on-window-detected]]
-if.app-id = 'com.apple.AccessibilityInspector'
-run = 'move-node-to-workspace 0'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.FontBook'
-run = 'move-node-to-workspace 0'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.Passwords'
-run = 'move-node-to-workspace 0'
-
+# --- Finder ---
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
-run = 'move-node-to-workspace 0'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.shortcuts'
-run = 'move-node-to-workspace 0'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.systempreferences'
-run = ['layout floating', 'move-node-to-workspace 0']
-
-[[on-window-detected]]
-if.app-id = 'com.apple.Terminal'
-run = 'move-node-to-workspace 0'
-
-[[on-window-detected]]
-if.app-id = 'com.alienator88.Pearcleaner'
-run = 'move-node-to-workspace 0'
-
-[[on-window-detected]]
-if.app-id = 'com.superultra.Homerow'
-run = 'move-node-to-workspace 0'
-
-[[on-window-detected]]
-if.app-id = 'org.pqrs.Karabiner-EventViewer'
-run = 'move-node-to-workspace 0'
-
-[[on-window-detected]]
-if.app-id = 'org.pqrs.Karabiner-Elements.Settings'
-run = 'move-node-to-workspace 0'
-
-[[on-window-detected]]
-if.app-id = 'site.kaylees.Wipr2'
-run = 'move-node-to-workspace 0'
-
-# --- 💬 Chat / Connections ---
-[[on-window-detected]]
-if.app-id = 'chat.rocket'
-run = 'move-node-to-workspace C'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.AddressBook'
-run = 'move-node-to-workspace C'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.FaceTime'
-run = 'move-node-to-workspace C'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.mail'
-run = 'move-node-to-workspace C'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.MobileSMS'
-run = 'move-node-to-workspace C'
-
-[[on-window-detected]]
-if.app-id = 'salutejazz.jazz-app'
-run = 'move-node-to-workspace C'
-
-[[on-window-detected]]
-if.app-id = 'us.zoom.xos'
-run = 'move-node-to-workspace C'
-
-# --- 📖 Vocabulary / References ---
-[[on-window-detected]]
-if.app-id = 'com.kapeli.dashdoc'
-run = 'move-node-to-workspace V'
-
-[[on-window-detected]]
-if.app-id = 'net.ankiweb.launcher'
-run = 'move-node-to-workspace V'
-
-[[on-window-detected]]
-if.app-id = 'org.goldendict.GoldenDict'
-run = 'move-node-to-workspace V'
-
-[[on-window-detected]]
-if.app-id = 'com.apple.Dictionary'
-run = 'move-node-to-workspace V'
+run = 'move-node-to-workspace F'

@@ -8,9 +8,9 @@
 # Optional parameters:
 # @raycast.icon /Users/alexeykotomin/.local/share/img/icons/emacs.png
 # @raycast.packageName nixos-config
-# @raycast.description open ~/.config/nix/modules/shared/config/emacs/emacs.nix via emacsclient
+# @raycast.description open ~/nix/modules/shared/config/emacs/emacs.nix via emacsclient
 
-FILE="/Users/alexeykotomin/.config/nix/modules/shared/config/emacs/emacs.nix"
+FILE="/Users/alexeykotomin/nix/modules/shared/config/emacs/emacs.nix"
 
 /Users/alexeykotomin/.config/scripts/raycast-scripts/open-scripts/emacsclient -n "$FILE"
 

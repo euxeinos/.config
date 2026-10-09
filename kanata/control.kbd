@@ -14,7 +14,7 @@
     prnt M-S-4
     del C-d
     all (tap-hold $tap-time $hold-time M-a (layer-toggle fun))
-    S-T (tap-hold-press $tap-time $hold-time tab lalt)
+    S-T (tap-hold-press $tap-time $hold-time tab lctl)
 
     a⇥spc C-A-M-tab
 

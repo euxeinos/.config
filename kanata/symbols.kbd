@@ -1,10 +1,6 @@
 (defalias
   ;; -------------------------------------------------------------------------------------
   ;; Symbols definition
-
-  ;; to use this symbols, you have to ensure:
-  ;; - that you have US (qwerty) and RU (йцукен) layouts set in the system
-  ;; - set separate activation shortcuts for @en and @ru - just look at the definitions
   % S-5
   + S-=
   * S-8

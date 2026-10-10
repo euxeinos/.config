@@ -36,7 +36,7 @@
     hyp (tap-hold $tap-time $hold-time esc (layer-toggle app))
     app (layer-while-held app)
     fun (layer-while-held fun)
-    lfun (tap-hold $tap-time $hold-time bspc (layer-toggle fun))
+    lfun (tap-hold $tap-time $hold-time del (layer-toggle fun))
     rfun (tap-hold $tap-time $hold-time esc (layer-toggle fun))
     l_ (tap-hold $tap-time $hold-pinky _ (layer-toggle swi))
     nav (tap-hold $tap-time $hold-time spc (layer-toggle nav))
@@ -92,6 +92,7 @@
 (deflayer app
  _    _     _     _     _     _         _     _     _     _     _      _   _   _
  _    _     _     _     _     _         @ajh  @aer- @aeru @aer+ @aserv _   _   _
+
  _    @aerq @aerw @aerf @aerp @swbuf    _     @aer1 @aer2 @aer3 @aer4 @aer5 _   _
  _    @anki _     @safari @emacs C-g    @aerm @aern @aere @aeri _    _   _
  _    @zen  @aerx @chat _     @aerv     _    _     @acco @aer- @aer+ @atls _

@@ -196,7 +196,7 @@ run = ['move-node-to-workspace R']
 # Preview
 [[on-window-detected]]
 if.app-id = 'com.apple.Preview'
-run = ['move-node-to-workspace P']
+run = ['layout floating', 'move-node-to-workspace P']
 
 # NTS Radio
 [[on-window-detected]]
@@ -206,7 +206,7 @@ run = ['move-node-to-workspace L']
 # Anki
 [[on-window-detected]]
 if.app-id = 'net.ankiweb.anki'
-run = ['move-node-to-workspace A']
+run = ['layout accordion', 'move-node-to-workspace A']
 
 # Zen
 [[on-window-detected]]

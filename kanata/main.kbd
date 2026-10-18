@@ -47,7 +47,7 @@
 ;; LAYERS ==============================================================================
 (include eng_colemak-dh.kbd)
 (include rus_qwerty.kbd)
-(include gre_qwerty.kbd)
+(include gre_colemak-dh.kbd)
 
 (deflayer swi
  _    _   _   _   _   _       _   _   _   _   _    _   _   _

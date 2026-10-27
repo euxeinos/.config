@@ -10,14 +10,41 @@ mode = "dark"
 tabRailAppIcons = false
 
 [borders]
-enabled = false
-width = 2.0
+enabled = true
+width = 1.0
 
 [borders.color]
 alpha = 1.0
-blue = 0.979300037944676
+blue = 0.8846490383148193
+green = 0.8855698108673096
+red = 0.7623914480209351
+
+[borders.darkColor]
+alpha = 1.0
+blue = 0.8846490383148193
+green = 0.8855698108673096
+red = 0.7623914480209351
+
+[borders.glow]
+enabled = true
+opacity = 0.05
+radius = 2.0
+
+[borders.gradient]
+direction = "topLeftToBottomRight"
+enabled = false
+
+[borders.gradient.end]
+alpha = 1.0
+blue = 0.7
 green = 1.0
-red = 0.08458520228437894
+red = 0.0
+
+[borders.gradient.start]
+alpha = 1.0
+blue = 1.0
+green = 0.4
+red = 0.0
 
 [clipboard]
 historyEnabled = false
@@ -44,7 +71,7 @@ moveMouseToFocusedWindow = false
 raiseOnMouseFocus = false
 
 [gaps]
-fullscreenUsesOuterGaps = false
+fullscreenUsesOuterGaps = true
 size = 4.0
 
 [gaps.outer]
@@ -69,9 +96,9 @@ fingerCount = 3
 invertDirection = true
 mouseMoveModifierKey = "option"
 mouseResizeModifierKey = "option"
-overviewGestureEnabled = false
-overviewGestureFingerCount = 4
-scrollEnabled = true
+overviewGestureEnabled = true
+overviewGestureFingerCount = 3
+scrollEnabled = false
 scrollModifierKey = "optionShift"
 scrollSensitivity = 5.0
 trackpadScrollStyle = "snap"
@@ -82,7 +109,7 @@ windowResizeEnabled = false
 windowResizeFingerCount = 3
 workspaceSwipeAxis = "vertical"
 workspaceSwipeEnabled = false
-workspaceSwipeFingerCount = 3
+workspaceSwipeFingerCount = 4
 
 [hiddenBar]
 enabled = true
@@ -98,11 +125,10 @@ margin = 1
 alwaysCenterSingleColumn = true
 centerFocusedColumn = "never"
 containerPrimarySpanPresets = [0.3333333333333333, 0.5, 0.6666666666666666]
-defaultContainerPrimarySpan = 0.5
 edgeGaps = true
-infiniteLoop = false
+infiniteLoop = true
 resizeStepPercent = 5
-singleWindowFit = "fill"
+singleWindowFit = "container_primary_span"
 visibleContainerCount = 2
 
 [overview]
@@ -110,7 +136,7 @@ enabled = false
 invertScrollDirection = false
 matchFocusBorder = true
 mouseScrollSpeed = 1.0
-zoom = 1.0
+zoom = 0.5
 
 [overview.backdrop]
 alpha = 0.0
@@ -140,7 +166,7 @@ red = 0.3
 
 [quakeTerminal]
 animationDuration = 0.2
-autoHide = false
+autoHide = true
 backgroundBlurRadius = 0
 backgroundEffect = "standardBlur"
 enabled = true
@@ -159,9 +185,9 @@ mode = "macOS"
 [scratchpads.labels]
 
 [statusBar]
-showAppNames = false
-showIcon = true
-showWorkspaceName = false
+showAppNames = true
+showIcon = false
+showWorkspaceName = true
 useWorkspaceId = false
 
 [workspaceBar]
@@ -170,30 +196,30 @@ autoHideHideDelayMilliseconds = 0.0
 autoHideRevealDelayMilliseconds = 0.0
 backgroundOpacity = 0.0
 deduplicateAppIcons = false
-enabled = true
-excludedBundleIDs = ["com.openai.chat", "net.ankiweb.anki"]
-height = 32.0
+enabled = false
+excludedBundleIDs = ["com.google.GeminiMacOS", "com.mitchellh.ghostty", "com.openai.chat", "net.ankiweb.anki"]
+height = 30.0
 hideEmptyWorkspaces = true
 hideInNativeFullscreen = true
 hoverPreviewsEnabled = false
-inactiveIconOpacity = 0.4
-notchActiveZoneWidth = 100.0
-notchMode = "splitActiveRight"
+inactiveIconOpacity = 0.05
+notchActiveZoneWidth = 150.0
+notchMode = "fillLeftOfNotch"
 notificationBadgeRefreshIntervalSeconds = 5.0
-notificationBadges = "dot"
+notificationBadges = "off"
 position = "overlappingMenuBar"
-reserveLayoutSpace = true
+reserveLayoutSpace = false
 revealHoldMilliseconds = 200.0
 revealModifier = "off"
 showAccentHighlights = true
 showFloatingWindows = true
 showItemBackgrounds = false
-showLabels = false
+showLabels = true
 solidBlackBackground = false
-systemStatsButton = true
+systemStatsButton = false
 transparentBackground = false
 windowLevel = "status"
-xOffset = -3.0
+xOffset = 0.0
 yOffset = 0.0
 
 [workspaceBar.iconOverrides]
@@ -969,7 +995,7 @@ binding = "Unassigned"
 id = "preselectClear"
 
 [[hotkeys]]
-binding = "Control+Option+Space"
+binding = "Control+Command+Space"
 id = "openCommandPalette"
 
 [[hotkeys]]
